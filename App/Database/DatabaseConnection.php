@@ -7,13 +7,13 @@ class DatabaseConnection{
 
     private function __construct()
     {
-        $username = "root";
-        $dbname = "mvcdb";
+        $username = "postgres";
+        $dbname = "freelanceedgedb";
         $host = "localhost";
         $password = "123123321321@instance";
-        $charset = "utf8mb4";
+        $port = 5432;
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
 
         try{
 

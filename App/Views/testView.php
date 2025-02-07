@@ -1,2 +1,2 @@
 <?php
-echo "test view";
+print_r($tests);
