@@ -77,4 +77,44 @@ class UtilisateurController
             echo "eroor" . $e->getMessage();
         }
     }
+
+    public function updateUser()
+    {
+        if (isset($_POST['submit'])) {
+            $id = $_POST['id'];
+            $fullname = $_POST['editfullname'];
+            $email = $_POST['editemail'];
+            $photo = $_POST['editphoto'];
+            $bio = $_POST['editbio'];
+            $project = $_POST['editproject'];
+            $competence = $_POST['editcompetence'];
+            $portfolio = $_POST['editportfolio'];
+            $role_id = $_POST['editrole_id'];
+            $tauxhoraire = $_POST['edittauxhoraire'];
+
+            $ediuser = new Utilisateur();
+            $ediuser->setFullName($fullname);
+            $ediuser->setEmail($email);
+            $ediuser->setPhoto($photo);
+            $ediuser->setBio($bio);
+            $ediuser->setProject($project);
+            $ediuser->setCompetence($competence);
+            $ediuser->setPortfolio($portfolio);
+            $ediuser->setRoleId($role_id);
+            $ediuser->setTauxhoraire($tauxhoraire);
+
+            if ($this->userModel->updateUser($ediuser)) {
+                header("Location: users.php");
+
+                exit();
+            } else {
+                echo " eroror updating ";
+            }
+        }
+    }
+
+    public function findUserById(int $id) 
+    {
+        return $this->userModel->findUserById($id);
+    }
 }

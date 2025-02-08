@@ -198,54 +198,99 @@ class Utilisateur
 
 
     public function getAllUsers(): array
-{
-    try {
-        $query = "
+    {
+        try {
+            $query = "
             SELECT 
                 u.*,
                 r.rolename as role_name
             FROM users u
             LEFT JOIN roles r ON u.role_id = r.id
         ";
-        $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->execute();
-        
-        $users = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $user = new Utilisateur();
-            $user->setId($row['id']);
-            $user->setFullName($row['fullname']);
-            $user->setEmail($row['email']);
-            $user->setPassword($row['password']);
-            $user->setPhoto($row['photo']);
-            $user->setRoleId($row['role_id']);
-            $user->setRole(new Role($row['role_id'], $row['role_name']));
-            
-            $users[] = $user;
+            $stmt = DatabaseConnection::getInstance()->prepare($query);
+            $stmt->execute();
+
+            $users = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $user = new Utilisateur();
+                $user->setId($row['id']);
+                $user->setFullName($row['fullname']);
+                $user->setEmail($row['email']);
+                $user->setPassword($row['password']);
+                $user->setPhoto($row['photo']);
+                $user->setRoleId($row['role_id']);
+                $user->setRole(new Role($row['role_id'], $row['role_name']));
+
+                $users[] = $user;
+            }
+
+            return $users;
+        } catch (PDOException $e) {
+            error_log("Database error:" . $e->getMessage());
+            return [];
         }
-        
-        return $users;
-    } catch (PDOException $e) {
-        error_log("Database error:" . $e->getMessage());
-        return [];
     }
-}
 
 
 
-public function deleteUser(int $id)
-{
-    try {
-        $query = "DELETE FROM users WHERE id = :id";
+    public function deleteUser(int $id)
+    {
+        try {
+            $query = "DELETE FROM users WHERE id = :id";
+
+            $stmt = DatabaseConnection::getInstance()->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            error_log("eroro delete" . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateUser(Utilisateur $user)
+    {
+        $query = "UPDATE users SET 
+                fullName = :fullName, 
+                email = :email, 
+                photo = :photo, 
+                bio = :bio,
+                password = :password,
+                project = :project,
+                competence = :competence
+                portfolio = :portfolio,
+                role_id = :role_id,
+                rolename = :rolename,
+                tauxhoraire = :tauxhoraire,
+              WHERE id = :id";
 
         $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->bindParam(':id', $id);
+
+        $stmt->bindParam(':fullName', $user->getFullName());
+        $stmt->bindParam(':email', $user->getEmail());
+        $stmt->bindParam(':photo', $user->getPhoto());
+        $stmt->bindParam(':project', $user->getProject());
+        $stmt->bindParam(':competence', $user->getCompetence());
+        $stmt->bindParam(':portfolio', $user->getPortfolio());
+        $stmt->bindParam(':role_id', $user->getRoleId());
+        $stmt->bindParam(':tauxhoraire', $user->getTauxhoraire());
+        $stmt->bindParam(':bio', $user->getBio());
+        $stmt->bindParam(':id', $user->getId());
+
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute();
-        
-        return $stmt->rowCount();
-    } catch (PDOException $e) {
-        error_log("eroro delete" . $e->getMessage());
-        return false;
+
+        return $user;
     }
-}
+
+    public static function findUserById(int $id): Utilisateur
+    {
+        $query = "SELECT * FROM contacts WHERE id = " . $id;
+
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchObject(DatabaseConnection::class);
+    }
 }
