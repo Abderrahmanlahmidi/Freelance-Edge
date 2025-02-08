@@ -149,5 +149,25 @@ class Utilisateur
     }
 
 
-    public function createUser() {}
+    public function createUser(Utilisateur $user) 
+    {
+        $query = "INSERT INTO FreelanceEdgeDB (fullName, email , password, photo, project , bio, competence , portfolio, role_id , tauxhoraire) VAlUES ('".$user->getFullName()."','"
+         .$user->getEmail()."','"
+         .$user->getPhoto()."','"
+         .$user->getEmail()."','"
+         .$user->getPassword()."','"
+         .$user->getProject()."','"
+         .$user->getCompetence()."','"
+         .$user->getPortfolio()."','"
+         .$user->getTauxhoraire()."','"
+         .$user->getRoleId()."','"
+         .$user->getBio().")";
+
+         $stmt = DatabaseConnection::getInstance()->prepare($query);
+         $stmt->execute();
+
+         $user->setId(DatabaseConnection::getInstance()->lastInsertId());
+
+         return $user ;
+    }
 }
