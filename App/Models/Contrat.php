@@ -1,5 +1,7 @@
 <?php
 
+require './Project.php';
+
 class Contrat
 {
 

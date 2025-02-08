@@ -6,11 +6,7 @@ class Role
     private int $id = 0;
     private string $rolename = "";
 
-
-
     public function __construct() {}
-
-
 
     public static function instanceWithName(string $name): Role
     {
@@ -31,10 +27,6 @@ class Role
         $this->rolename = $rolename;
     }
 
-
-
-
-
     public function getId(): int
     {
         return $this->id;
@@ -44,9 +36,6 @@ class Role
     {
         return $this->rolename;
     }
-
-
-
 
 
     public function __toString()
