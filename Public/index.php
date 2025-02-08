@@ -1,15 +1,15 @@
 <?php
-require "../helpers.php";
+// require "../helpers.php";
 
 
-require basePath('App/Routes/router.php');
+// require basePath('App/Routes/router.php');
 
-$router = new Router();
+// $router = new Router();
 
-require basePath('App/Routes/routes.php');
+// require basePath('App/Routes/routes.php');
 
-$uri = $_SERVER["REQUEST_URI"];
-$method = $_SERVER["REQUEST_METHOD"];
+// $uri = $_SERVER["REQUEST_URI"];
+// $method = $_SERVER["REQUEST_METHOD"];
 
-$router -> route($uri, $method);
+// $router -> route($uri, $method);
 

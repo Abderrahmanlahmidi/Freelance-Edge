@@ -3,10 +3,14 @@
 
 class Role
 {
+    
     private int $id = 0;
     private string $rolename = "";
 
-    public function __construct() {}
+    public function __construct(int $id = 0,string $rolename = '') {
+        $this->id = $id;
+        $this->rolename = $rolename;
+    }
 
     public static function instanceWithName(string $name): Role
     {
