@@ -16,6 +16,11 @@ if (isset($_POST['submit'])) {
     $controller->addUser();
 }
 
+if (isset($_POST['delete']) && isset($_POST['id'])) {
+    $controller = new UtilisateurController();
+    $controller->deleteUser((int)$_POST['id']);
+}
+
 
 
 ?>
@@ -215,7 +220,7 @@ if (isset($_POST['submit'])) {
 
                                             <td>
                                                 <a class="text-heading font-semibold">
-                                                <?= $user->getRole()->getRoleName(); ?>
+                                                    <?= $user->getRole()->getRoleName(); ?>
 
                                                 </a>
                                             </td>
@@ -235,11 +240,8 @@ if (isset($_POST['submit'])) {
                                                 <a>
 
                                                     <form method="POST" action="" style="display: inline;">
-                                                        <input type="hidden" name="id">
-                                                        <button
-                                                            type="submit"
-                                                            name="delete"
-                                                            class="btn d-inline-flex btn-sm btn-danger mx-1">
+                                                        <input type="hidden" name="id" value="<?= $user->getId() ?>">
+                                                        <button type="submit" name="delete" class="btn d-inline-flex btn-sm btn-danger mx-1">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </form>

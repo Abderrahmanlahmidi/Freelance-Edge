@@ -24,7 +24,7 @@ class UtilisateurController
             $competence = $_POST['competence'] ?? [];
             $portfolio = $_POST['portfolio'] ?? '';
             $tauxhoraire = $_POST['tauxhoraire'] ?? 0;
-    
+
             $photo = 'default.jpg';
             if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = 'uploads/';
@@ -37,7 +37,7 @@ class UtilisateurController
                     $photo = $photoName;
                 }
             }
-    
+
             try {
                 $user = new Utilisateur();
                 $user->setFullName($fullName);
@@ -49,9 +49,9 @@ class UtilisateurController
                 $user->setTauxhoraire($tauxhoraire);
                 $user->setPassword($password);
                 $user->setRoleId($role_id);
-    
+
                 $user->createUser($user);
-    
+
                 header('Location: users.php');
                 exit;
             } catch (Exception $e) {
@@ -64,5 +64,17 @@ class UtilisateurController
     public function getAllUsers(): array
     {
         return $this->userModel->getAllUsers();
+    }
+
+    public function deleteUser(int $id)
+    {
+        try {
+
+        $this->userModel->deleteUser($id);
+        header("Location: users.php");
+        exit();
+        } catch (Exception $e) {
+            echo "eroor" . $e->getMessage();
+        }
     }
 }

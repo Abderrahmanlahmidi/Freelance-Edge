@@ -230,4 +230,22 @@ class Utilisateur
         return [];
     }
 }
+
+
+
+public function deleteUser(int $id)
+{
+    try {
+        $query = "DELETE FROM users WHERE id = :id";
+
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        return $stmt->rowCount();
+    } catch (PDOException $e) {
+        error_log("eroro delete" . $e->getMessage());
+        return false;
+    }
+}
 }
