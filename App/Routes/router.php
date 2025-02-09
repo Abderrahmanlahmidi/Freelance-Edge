@@ -4,27 +4,30 @@ class Router
 {
     protected $routes = [];
 
-    public function routerMethod($method, $uri, $controller)
+    public function routerMethod($method, $uri, $controller, $methodName)
     {
-        $this->routes[$method][$uri] = $controller;
+        $this->routes[$method][$uri] = ['controller' => $controller, 'method' => $methodName];
     }
 
-    public function get($uri, $controller)
+    public function get($uri, $controller, $methodName)
     {
-        $this->routerMethod("GET", $uri, $controller);
+        $this->routerMethod("GET", $uri, $controller, $methodName);
     }
 
-    public function post($uri, $controller)
+    public function post($uri, $controller, $methodName)
     {
-        $this->routerMethod("POST", $uri, $controller);
+        $this->routerMethod("POST", $uri, $controller, $methodName);
     }
 
     public function route($uri, $method)
     {
-        if ($callback = $this->routes[$method][$uri]) {
-            require basePath($callback);
+        if (isset($this->routes[$method][$uri])) {
+            $controllerName = $this -> routes[$method][$uri]['controller'];
+            $method = $this -> routes[$method][$uri]['method'];
+            require basePathController($controllerName);
+            $controller = new $controllerName();
+            $controller->$method();
         } else {
-            http_response_code(404);
             require basePath('App/Error/Error.php');
             exit;
         }
