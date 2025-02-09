@@ -1,16 +1,20 @@
 <?php
 
+require_once basePath('App/Database/DatabaseConnection.php');
+
 class Utilisateur {
 
     private int $id = 0;
     private string $fullName ="";
+    private string $email ="";
+    private string $password ="";
     private Role $role ;
     private string $photo ="";
     private Project $project ;
     private string $bio ="" ; 
     private array $competence = [];
     private string $portfolio =""; 
-    private int $tauxhoraire =0 ;
+    private int $tauxhoraire = 0 ;
     
     
 
@@ -88,10 +92,28 @@ class Utilisateur {
     {
         $this->tauxhoraire = $tauxhoraire;
     }
-    
-    
 
+    public function register($first_name, $last_name, $age, $email, $password): void
+    {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $query = 'INSERT INTO "users" (first_name, last_name, age, email, password) VALUES (:first_name, :last_name, :age, :email, :password)';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindParam(':first_name', $first_name);
+        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':age', $age);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->execute();
+    }
 
-
+    public function connecter($email)
+    {
+        $query = 'SELECT * FROM "users" WHERE email = :email';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+        return $user ?: null;
+    }
 
 }

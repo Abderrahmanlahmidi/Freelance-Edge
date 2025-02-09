@@ -1,7 +1,6 @@
 <?php
 require "../helpers.php";
 
-
 require basePath('App/Routes/router.php');
 
 $router = new Router();
@@ -12,4 +11,7 @@ $uri = $_SERVER["REQUEST_URI"];
 $method = $_SERVER["REQUEST_METHOD"];
 
 $router -> route($uri, $method);
+
+
+
 
