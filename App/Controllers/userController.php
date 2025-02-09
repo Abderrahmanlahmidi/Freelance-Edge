@@ -15,7 +15,7 @@ class UserController
 
     public function homeController()
     {
-        require_once basePath("App/Views/homeView.php");
+        require_once basePath("App/Views/Pages/homeView.php");
     }
 
     public function registerUserController()
@@ -69,7 +69,7 @@ class UserController
     public function logoutUserController()
     {
         session_destroy();
-        header('Location:/login');
+        header('Location:/');
         exit;
     }
 

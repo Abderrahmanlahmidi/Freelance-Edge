@@ -14,6 +14,8 @@ CREATE TABLE test (
 INSERT INTO test (name, age) VALUES ('Alice', 25), ('Bob', 30);
 -- Retrieve all rows from the table:
 SELECT * FROM test;
+-- CREATE DATABASE "FreelanceEdgeDB"
+CREATE DATABASE FreelanceEdgeDB;
 -- create table users
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -28,7 +30,6 @@ CREATE TABLE users (
     taux_horaire DECIMAL(10,2) CHECK (taux_horaire >= 0),
     password TEXT NOT NULL
 );
-
 -- fake data
 INSERT INTO users (first_name, last_name, age, email, photo, bio, competences, portfolio, taux_horaire, password)
 VALUES ('Ali', 'Bennani', 25, 'ali.bennani@example.com', 'https://example.com/photos/ali.jpg',
@@ -65,4 +66,14 @@ VALUES ('Ali', 'Bennani', 25, 'ali.bennani@example.com', 'https://example.com/ph
         '["https://github.com/omarelidrissi", "https://omar-projects.com"]',
         40.00,
         '$2y$10$ABCDEFGHIJKLMNOPQRSTU1234567890');
+
+-- create table contract:
+CREATE TABLE "contract"(
+    id SERIAL PRIMARY KEY,
+    dateContract DATE NOT NULL
+    );
+
+-- fake data from the table contract:
+
+
 
