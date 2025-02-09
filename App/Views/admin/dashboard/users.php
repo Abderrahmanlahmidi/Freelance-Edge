@@ -1,28 +1,16 @@
 <?php
 require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 
-
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
 
-// var_dump($users);
-
-
-
-
 if (isset($_POST['submit'])) {
-    // require_once __DIR__ . '/../../Controllers/UtlisateurController.php'; 
-    // $controller = new UtlisateurController();
     $controller->addUser();
-}
-
-if (isset($_POST['delete']) && isset($_POST['id'])) {
-    $controller = new UtilisateurController();
+} else if (isset($_POST['update'])) {
+    $controller->updateUser();
+} else if (isset($_POST['delete']) && isset($_POST['id'])) {
     $controller->deleteUser((int)$_POST['id']);
 }
-
-
-
 ?>
 
 
@@ -228,13 +216,17 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
 
 
                                             <td class="text-end">
-                                                <a
-                                                    href="#"
-                                                    class="btn d-inline-flex btn-sm btn-warning mx-1"
-                                                    data-bs-toggle="modal" data-bs-target="#edituserModal">
-                                                    <span class="pe-2">
-                                                        <i class="bi bi-pencil"></i>
-                                                    </span>
+                                                <a href="#" class="btn d-inline-flex btn-sm btn-warning mx-1"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edituserModal"
+                                                    onclick="loadUserData(this)"
+                                                    data-id="<?= htmlspecialchars($user->getId()) ?>"
+                                                    data-fullname="<?= htmlspecialchars($user->getFullName()) ?>"
+                                                    data-email="<?= htmlspecialchars($user->getEmail()) ?>"
+                                                    data-password="<?= htmlspecialchars($user->getPassword()) ?>"
+                                                    data-role="<?= htmlspecialchars($user->getRoleId()) ?>"
+                                                    data-photo="<?= htmlspecialchars($user->getPhoto()) ?>">
+                                                    <span class="pe-2"><i class="bi bi-pencil"></i></span>
                                                     Edit
                                                 </a>
                                                 <a>
@@ -352,56 +344,56 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
     <!-- end Modal Creat -->
 
 
-
     <!-- start Modal Eding user  -->
-    <div class="modal fade" id="edituserModal" tabindex="-1" aria-labelledby="edituserModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edituserModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Edit users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-
                     <form method="POST" action="users.php" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="editid" id="editid">
 
+                        <!-- Photo -->
                         <div class="mb-3">
-                            <label>edit Photo</label>
-                            <input type="text" id="CRedit-photo" name="editphoto" class="form-control">
+                            <label>Current Photo</label>
+                            <img id="editphoto-preview" src="" class="img-thumbnail mb-2" style="max-width: 100px;">
+                            <input type="file" class="form-control" name="editphoto">
                         </div>
 
+                        <!-- Full Name -->
                         <div class="mb-3">
-                            <label for="editfullname" class="form-label">edit fullname</label>
-                            <input type="text" class="form-control" name="editfullname" id="editfullname">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="editfullname" id="editfullname" required>
                         </div>
 
+                        <!-- Email -->
                         <div class="mb-3">
-                            <label for="editemail" class="form-label"> edit Email address</label>
+                            <label class="form-label">Email</label>
                             <input type="email" class="form-control" name="editemail" id="editemail" required>
                         </div>
 
+                        <!-- Password -->
                         <div class="mb-3">
-                            <label for="editpassword" class="form-label">edit password</label>
-                            <input type="text" class="form-control" name="editpassword" id="editpassword">
+                            <label class="form-label">Password</label>
+                            <input type="text" class="form-control" name="editpassword" id="editpassword" required>
                         </div>
 
+                        <!-- Role -->
                         <div class="mb-3">
-                            <label for="editrole" class="form-label">Edit Role</label>
-                            <select class="form-select" id="edit-role" name="role">
-                                <option value="1">admin</option>
-                                <option value="2">client</option>
-                                <option value="3">frelancer</option>
+                            <label class="form-label">Role</label>
+                            <select class="form-select" name="editrole" id="editrole" required>
+                                <option value="1">Admin</option>
+                                <option value="2">Client</option>
+                                <option value="3">Freelancer</option>
                             </select>
                         </div>
 
-
-                        <button type="save" name="save" class="btn btn-primary">save</button>
-
+                        <button type="submit" name="update" class="btn btn-primary">Save Changes</button>
                     </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -412,6 +404,33 @@ if (isset($_POST['delete']) && isset($_POST['id'])) {
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+
+    <script>
+        function loadUserData(button) {
+            const id = button.getAttribute('data-id');
+            const fullname = button.getAttribute('data-fullname');
+            const email = button.getAttribute('data-email');
+            const password = button.getAttribute('data-password');
+            const role = button.getAttribute('data-role');
+            const photo = button.getAttribute('data-photo');
+
+            console.log('Loading user data:', {
+                id,
+                fullname,
+                email,
+                password,
+                role,
+                photo
+            }); // Debug output
+
+            document.getElementById('editid').value = id;
+            document.getElementById('editfullname').value = fullname;
+            document.getElementById('editemail').value = email;
+            document.getElementById('editpassword').value = password;
+            document.getElementById('editrole').value = role;
+            document.getElementById('editphoto-preview').src = photo;
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 

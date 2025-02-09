@@ -70,9 +70,9 @@ class UtilisateurController
     {
         try {
 
-        $this->userModel->deleteUser($id);
-        header("Location: users.php");
-        exit();
+            $this->userModel->deleteUser($id);
+            header("Location: users.php");
+            exit();
         } catch (Exception $e) {
             echo "eroor" . $e->getMessage();
         }
@@ -80,40 +80,46 @@ class UtilisateurController
 
     public function updateUser()
     {
-        if (isset($_POST['submit'])) {
-            $id = $_POST['id'];
-            $fullname = $_POST['editfullname'];
-            $email = $_POST['editemail'];
-            $photo = $_POST['editphoto'];
-            $bio = $_POST['editbio'];
-            $project = $_POST['editproject'];
-            $competence = $_POST['editcompetence'];
-            $portfolio = $_POST['editportfolio'];
-            $role_id = $_POST['editrole_id'];
-            $tauxhoraire = $_POST['edittauxhoraire'];
+        if (isset($_POST['update'])) {
+            try {
 
-            $ediuser = new Utilisateur();
-            $ediuser->setFullName($fullname);
-            $ediuser->setEmail($email);
-            $ediuser->setPhoto($photo);
-            $ediuser->setBio($bio);
-            $ediuser->setProject($project);
-            $ediuser->setCompetence($competence);
-            $ediuser->setPortfolio($portfolio);
-            $ediuser->setRoleId($role_id);
-            $ediuser->setTauxhoraire($tauxhoraire);
+                $id = (int)$_POST['editid'];
 
-            if ($this->userModel->updateUser($ediuser)) {
-                header("Location: users.php");
+                $user = Utilisateur::findUserById($id);
+                $photo = $user->getPhoto();
+                if (isset($_FILES['editphoto']) && $_FILES['editphoto']['error'] === UPLOAD_ERR_OK) {
+                    $uploadDir = 'uploads/';
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
 
-                exit();
-            } else {
-                echo " eroror updating ";
+                    $photoName = uniqid() . '_' . basename($_FILES['editphoto']['name']);
+                    $photoPath = $uploadDir . $photoName;
+
+                    if (move_uploaded_file($_FILES['editphoto']['tmp_name'], $photoPath)) {
+                        $photo = $photoName;
+                    }
+                }
+                $user->setId($id);
+                $user->setFullName($_POST['editfullname']);
+                $user->setEmail($_POST['editemail']);
+                $user->setPassword($_POST['editpassword']);
+                $user->setRoleId((int)$_POST['editrole']);
+                $user->setPhoto($photo);
+
+                if ($this->userModel->updateUser($user)) {
+                    header("Location: users.php");
+                    exit();
+                }
+
+                throw new Exception("Failed to update user");
+            } catch (Exception $e) {
+                error_log("Error in updateUser: " . $e->getMessage());
             }
         }
     }
 
-    public function findUserById(int $id) 
+    public function findUserById(int $id)
     {
         return $this->userModel->findUserById($id);
     }

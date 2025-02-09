@@ -231,8 +231,6 @@ class Utilisateur
         }
     }
 
-
-
     public function deleteUser(int $id)
     {
         try {
@@ -249,48 +247,53 @@ class Utilisateur
         }
     }
 
-    public function updateUser(Utilisateur $user)
+    public function updateUser(Utilisateur $user): bool
     {
-        $query = "UPDATE users SET 
-                fullName = :fullName, 
-                email = :email, 
-                photo = :photo, 
-                bio = :bio,
-                password = :password,
-                project = :project,
-                competence = :competence
-                portfolio = :portfolio,
-                role_id = :role_id,
-                rolename = :rolename,
-                tauxhoraire = :tauxhoraire,
-              WHERE id = :id";
+        try {
+            $query = "UPDATE users SET 
+            fullName = :fullName,
+            email = :email,
+            password = :password,
+            photo = :photo,
+            role_id = :role_id
+            WHERE id = :id";
 
-        $stmt = DatabaseConnection::getInstance()->prepare($query);
-
-        $stmt->bindParam(':fullName', $user->getFullName());
-        $stmt->bindParam(':email', $user->getEmail());
-        $stmt->bindParam(':photo', $user->getPhoto());
-        $stmt->bindParam(':project', $user->getProject());
-        $stmt->bindParam(':competence', $user->getCompetence());
-        $stmt->bindParam(':portfolio', $user->getPortfolio());
-        $stmt->bindParam(':role_id', $user->getRoleId());
-        $stmt->bindParam(':tauxhoraire', $user->getTauxhoraire());
-        $stmt->bindParam(':bio', $user->getBio());
-        $stmt->bindParam(':id', $user->getId());
-
-        $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->execute();
-
-        return $user;
+            $stmt = DatabaseConnection::getInstance()->prepare($query);
+            return $stmt->execute([
+                'fullName' => $user->getFullName(),
+                'email' => $user->getEmail(),
+                'password' => $user->getPassword(), 
+                'photo' => $user->getPhoto(),
+                'role_id' => $user->getRoleId(),
+                'id' => $user->getId()
+            ]);
+        } catch (PDOException $e) {
+            error_log("Error updating user: " . $e->getMessage());
+            return false;
+        }
     }
 
     public static function findUserById(int $id): Utilisateur
     {
-        $query = "SELECT * FROM contacts WHERE id = " . $id;
+        try {
+            $query = "SELECT * FROM users WHERE id = :id";
+            $stmt = DatabaseConnection::getInstance()->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
 
-        $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->execute();
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+            $user = new Utilisateur();
+            $user->setId($userData['id']);
+            $user->setFullName($userData['fullname']);
+            $user->setEmail($userData['email']);
+            $user->setPassword($userData['password']);
+            $user->setPhoto($userData['photo']);
+            $user->setRoleId($userData['role_id']);
 
-        return $stmt->fetchObject(DatabaseConnection::class);
+            return $user;
+        } catch (PDOException $e) {
+            error_log("Error finding user: " . $e->getMessage());
+            return null;
+        }
     }
 }
