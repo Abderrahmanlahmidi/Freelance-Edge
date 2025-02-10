@@ -1,4 +1,4 @@
-CREATE DATABASE FreelanceEdgeTestDb;
+CREATE DATABASE FreelanceEdgeDb;
 -- \c FreelanceEdgeTestDb;
 -- User Table
 CREATE TABLE "User" (

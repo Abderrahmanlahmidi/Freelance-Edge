@@ -10,5 +10,7 @@ $router -> get('/logout', 'userController', 'logoutUserController');
 $router->post('/register', 'userController', 'registerUserController');
 $router -> post('/login', 'userController', 'connectionUserController');
 
+$router -> post('/admindash', 'userController', '');
+
 
 

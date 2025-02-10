@@ -1,7 +1,6 @@
 <?php
 
-require __DIR__ . '/../../App/Models/Utilisateur.php';
-require __DIR__ . '/../../App/Models/Role.php';
+require_once basePath('App/Models/Utilisateur.php');
 
 class UtilisateurController
 {
@@ -59,7 +58,6 @@ class UtilisateurController
             }
         }
     }
-
 
     public function getAllUsers(): array
     {
