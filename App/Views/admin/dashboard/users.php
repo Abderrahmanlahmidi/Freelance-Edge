@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 
+
+// echo " dfghjklmù";
+
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
 

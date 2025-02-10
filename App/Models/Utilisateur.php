@@ -2,6 +2,7 @@
 
 
 // require_once __DIR__ . '/../../App/Models/Project.php';
+require_once basePath("App/Models/Role.php");
 
 
 require_once basePath('App/Database/DatabaseConnection.php');
@@ -195,8 +196,7 @@ class Utilisateur
 
     public function createUser(Utilisateur $user)
     {
-        $query = "INSERT INTO users (fullName, email, password, photo, bio, competence, portfolio, role_id, tauxhoraire) 
-              VALUES (:fullName, :email, :password, :photo, :bio, :competence, :portfolio, :role_id, :tauxhoraire)";
+        $query = "INSERT INTO users (fullName, email, password, photo, bio, competence, portfolio, role_id, tauxhoraire) VALUES (:fullName, :email, :password, :photo, :bio, :competence, :portfolio, :role_id, :tauxhoraire)";
 
         $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute([
