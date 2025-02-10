@@ -23,9 +23,7 @@ CREATE TABLE "Project" (
     titre VARCHAR(255) NOT NULL,
     description TEXT,
     budget INT NOT NULL,
-    durre DATE NOT NULL,
-
-
+    durre DATE NOT NULL
 )
 -- Contract Table
 CREATE TABLE "Contract" (
