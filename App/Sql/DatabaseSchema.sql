@@ -11,12 +11,12 @@ CREATE TABLE "User" (
     bio VARCHAR(255) NOT NULL,
     competence VARCHAR(255) NOT NULL,
     portfolio VARCHAR(255) NOT NULL,
-    tauxHoraire INT,
+    tauxHoraire INT NOT NULL,
     password VARCHAR(255) NOT NULL,
     projects_id INT NOT NULL,
     role_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id),
+    FOREIGN KEY (role_id) REFERENCES Role(id)
 );
 -- Project Table
 CREATE TABLE "Project" (
@@ -31,7 +31,7 @@ CREATE TABLE "Contract" (
     id SERIAL PRIMARY KEY,
     dateContract VARCHAR(255) NOT NULL,
     project_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Category Table
 CREATE TABLE "Category" (
@@ -44,7 +44,7 @@ CREATE TABLE "Payment" (
     budget INT NOT NULL,
     date_payment DATE NOT NULL,
     project_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Table Role
 CREATE TABLE "Role" (
@@ -55,7 +55,7 @@ CREATE TABLE "Role" (
 CREATE TABLE "Messages" (
     id SERIAL PRIMARY KEY,
     date_soumission DATE NOT NULL
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Offer Table
 CREATE TABLE "Offer" (

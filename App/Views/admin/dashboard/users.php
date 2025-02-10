@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
 
+
 if (isset($_POST['submit'])) {
     $controller->addUser();
 } else if (isset($_POST['update'])) {
@@ -11,7 +12,9 @@ if (isset($_POST['submit'])) {
 } else if (isset($_POST['delete']) && isset($_POST['id'])) {
     $controller->deleteUser((int)$_POST['id']);
 }
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -21,7 +24,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frelancer-Edge</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./Style/style.css" />
     <link
         href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
         rel="stylesheet" />
