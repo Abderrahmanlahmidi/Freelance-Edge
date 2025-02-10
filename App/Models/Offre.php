@@ -1,5 +1,7 @@
 <?php
 
+require_once basePath("App/Database/DatabaseConnection.php");
+
 class Offre
 {
     private int $id;
@@ -36,6 +38,7 @@ class Offre
     {
         return $this->descriptionOffre;
     }
+
 
     public function createOffre(){
 

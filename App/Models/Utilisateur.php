@@ -220,10 +220,10 @@ class Utilisateur
     public function register($first_name, $last_name, $age, $email, $password): void
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = 'INSERT INTO "users" (first_name, last_name, age, email, password) VALUES (:first_name, :last_name, :age, :email, :password)';
+        $query = 'INSERT INTO "users" (firstname, lastname, age, email, password) VALUES (:firstname, :lastname, :age, :email, :password)';
         $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':firstname', $first_name);
+        $stmt->bindParam(':lastname', $last_name);
         $stmt->bindParam(':age', $age);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashedPassword);
