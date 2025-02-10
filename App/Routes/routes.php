@@ -1,14 +1,14 @@
 <?php
 
 // GET METHODS
-$router -> get('/', 'userController', 'homeController');
-$router->get('/register', 'userController', 'registerUserController');
-$router -> get('/login', 'userController', 'connectionUserController');
-$router -> get('/logout', 'userController', 'logoutUserController');
+$router -> get('/', 'UtilisateurController', 'homeController');
+$router->get('/register', 'UtilisateurController', 'registerUserController');
+$router -> get('/login', 'UtilisateurController', 'connectionUserController');
+$router -> get('/logout', 'UtilisateurController', 'logoutUserController');
 
 // POST METHODS
-$router->post('/register', 'userController', 'registerUserController');
-$router -> post('/login', 'userController', 'connectionUserController');
+$router->post('/register', 'UtilisateurController', 'registerUserController');
+$router -> post('/login', 'UtilisateurController', 'connectionUserController');
 
 
 
