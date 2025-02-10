@@ -23,13 +23,13 @@ class UtilisateurController
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
+            $firstname = $_POST['first_name'];
+            $lastname = $_POST['last_name'];
             $age = $_POST['age'];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $this->userModel->register($first_name, $last_name, $age, $email, $password);
+            $this->userModel->register($firstname, $lastname, $age, $email, $password);
             header('Location:/login');
             exit;
 
