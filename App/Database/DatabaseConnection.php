@@ -10,7 +10,7 @@ class DatabaseConnection{
         $username = "postgres";
         $dbname = "freelanceedgedb";
         $host = "localhost";
-        $password = "4321";
+        $password = "123123321321@instance";
         $port = 5432;
 
         $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
@@ -32,9 +32,9 @@ class DatabaseConnection{
         return self::$instance->pdo;
     }
 
-
-
 }
+
+
 
 
 

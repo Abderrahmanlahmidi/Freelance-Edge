@@ -421,8 +421,7 @@ if (isset($_POST['submit'])) {
                 password,
                 role,
                 photo
-            }); // Debug output
-
+            });
             document.getElementById('editid').value = id;
             document.getElementById('editfullname').value = fullname;
             document.getElementById('editemail').value = email;
