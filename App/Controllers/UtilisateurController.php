@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../../helpers.php';
 require_once basePath("App/Models/Utilisateur.php");
 session_start();
 
@@ -23,13 +24,13 @@ class UtilisateurController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
+            $firstname = $_POST['first_name'];
+            $lastname = $_POST['last_name'];
             $age = $_POST['age'];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $this->userModel->register($first_name, $last_name, $age, $email, $password);
+            $this->userModel->register($firstname, $lastname, $age, $email, $password);
             header('Location:/login');
             exit;
 
@@ -78,7 +79,6 @@ class UtilisateurController
         if (isset($_POST['submit'])) {
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
-            $age = $_POST['age'];
             $email = $_POST['email'];
             $password = $_POST['password'];
             $role_id = $_POST['role'];
@@ -104,7 +104,6 @@ class UtilisateurController
                 $user = new Utilisateur();
                 $user->setFirstname($firstname);
                 $user->setLastname($lastname);
-                $user->setAge($age);
                 $user->setPhoto($photo);
                 $user->setEmail($email);
                 $user->setBio($bio);
@@ -126,11 +125,10 @@ class UtilisateurController
 
 
 
-    public function getAllUsers()
+    public function getAllUsers():array
     {
-        $this->userModel->getAllUsers();
-        require_once basePath("App/Views/admin/dashboard/users.php");
-
+        return $this->userModel->getAllUsers();
+        // require_once basePath("App/Views/admin/dashboard/users.php");
 
     }
 

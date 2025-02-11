@@ -7,6 +7,8 @@ require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
 
+// var_dump($users);
+
 
 if (isset($_POST['submit'])) {
     $controller->addUser();
@@ -16,10 +18,8 @@ if (isset($_POST['submit'])) {
     $controller->deleteUser((int)$_POST['id']);
 }
 
+
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +33,14 @@ if (isset($_POST['submit'])) {
         rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
+
+
+<style>
+    @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+
+    /* Bootstrap Icons */
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+</style>
 
 <body>
     <!-- Dashboard -->
@@ -241,12 +249,12 @@ if (isset($_POST['submit'])) {
                                                 </a>
                                                 <a>
 
-                                                    <form method="POST" action="" style="display: inline;">
+                                                <form method="POST" action="" style="display: inline;">
                                                         <input type="hidden" name="id" value="<?= $user->getId() ?>">
                                                         <button type="submit" name="delete" class="btn d-inline-flex btn-sm btn-danger mx-1">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
-                                                    </form>
+                                                </form>
 
                                                 </a>
                                             </td>
@@ -309,7 +317,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-body">
 
-                    <form method="POST" action="users.php" enctype="multipart/form-data">
+                    <form method="POST" action="/dashboard" enctype="multipart/form-data">
 
                         <div class="mb-3">
                             <label>Photo</label>

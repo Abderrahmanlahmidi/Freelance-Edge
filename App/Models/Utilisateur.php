@@ -20,7 +20,7 @@ class Utilisateur
     public string $password;
     public string $passwordConfirmation;
     public string $photo = "";
-    public Project $project ;
+    public Project $project;
     public string $bio = "";
     public array $competence = [];
     public string $portfolio = "";
@@ -32,7 +32,7 @@ class Utilisateur
 
     public function __construct() {}
 
-    public static function instance(string $firstname,string $lastname,int $age, string $email, string $password, string $passwordConfirmation, string $photo, int $role_id, Role $role, Project $project, string $bio)
+    public static function instance(string $firstname, string $lastname, int $age, string $email, string $password, string $passwordConfirmation, string $photo, int $role_id, Role $role, Project $project, string $bio)
     {
         $instance = new self();
         $instance->firstname = $firstname;
@@ -238,10 +238,10 @@ class Utilisateur
     public function register($first_name, $last_name, $age, $email, $password): void
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = 'INSERT INTO "users" (first_name, last_name, age, email, password) VALUES (:first_name, :last_name, :age, :email, :password)';
+        $query = 'INSERT INTO "users" (firstname, lastname, age, email, password) VALUES (:firstname, :lastname, :age, :email, :password)';
         $stmt = DatabaseConnection::getInstance()->prepare($query);
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':firstname', $first_name);
+        $stmt->bindParam(':lastname', $last_name);
         $stmt->bindParam(':age', $age);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashedPassword);
@@ -263,27 +263,24 @@ class Utilisateur
             $query = "
             SELECT 
                 u.*,
-                r.rolename as role_name
+                r.rolename as rolename
             FROM users u
             LEFT JOIN roles r ON u.role_id = r.id
         ";
             $stmt = DatabaseConnection::getInstance()->prepare($query);
             $stmt->execute();
 
-
-
             $users = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                 $user = new Utilisateur();
-                $user->setId($row['id']);
-                $user->setFirstname($row['firstname']);
-                $user->setLastname($row['lastname']);
-                $user->setEmail($row['email']);
-                $user->setPassword($row['password']);
-                $user->setPhoto($row['photo']);
-                $user->setRoleId($row['role_id']);
-                $user->setRole(new Role($row['role_id'], $row['role_name']));
-
+                $user->setId($row->id);
+                $user->setFirstname($row->firstname);
+                $user->setLastname($row->lastname);
+                $user->setEmail($row->email);
+                $user->setPassword($row->password);
+                $user->setPhoto($row->photo);
+                $user->setRoleId($row->role_id);
+                $user->setRole(new Role($row->role_id, $row->rolename));
                 $users[] = $user;
             }
 
@@ -293,8 +290,6 @@ class Utilisateur
             return [];
         }
     }
-
-
 
     public function deleteUser(int $id)
     {
