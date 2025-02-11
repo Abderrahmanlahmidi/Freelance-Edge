@@ -21,7 +21,6 @@ class UtilisateurController
 
     public function registerUserController()
     {
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $first_name = $_POST['first_name'];
@@ -77,7 +76,9 @@ class UtilisateurController
     public function addUser()
     {
         if (isset($_POST['submit'])) {
-            $fullName = $_POST['fullname'];
+            $firstname = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $age = $_POST['age'];
             $email = $_POST['email'];
             $password = $_POST['password'];
             $role_id = $_POST['role'];
@@ -101,7 +102,9 @@ class UtilisateurController
 
             try {
                 $user = new Utilisateur();
-                $user->setFullName($fullName);
+                $user->setFirstname($firstname);
+                $user->setLastname($lastname);
+                $user->setAge($age);
                 $user->setPhoto($photo);
                 $user->setEmail($email);
                 $user->setBio($bio);
@@ -121,17 +124,20 @@ class UtilisateurController
         }
     }
 
-    public function getAllUsers(): array
+
+
+    public function getAllUsers()
     {
-        return $this->userModel->getAllUsers();
-        // require_once basePath('App/Views/admin/dashbaord/users.php');
+        $this->userModel->getAllUsers();
         require_once basePath("App/Views/admin/dashboard/users.php");
+
+
     }
 
     public function deleteUser(int $id)
     {
         try {
-            
+
             $this->userModel->deleteUser($id);
             header("Location: users.php");
             exit();
@@ -163,7 +169,8 @@ class UtilisateurController
                     }
                 }
                 $user->setId($id);
-                $user->setFullName($_POST['editfullname']);
+                $user->setFirstname($_POST['editfirstname']);
+                $user->setLastname($_POST['editlastname']);
                 $user->setEmail($_POST['editemail']);
                 $user->setPassword($_POST['editpassword']);
                 $user->setRoleId((int)$_POST['editrole']);

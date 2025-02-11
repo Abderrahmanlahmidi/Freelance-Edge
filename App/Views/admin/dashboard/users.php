@@ -7,6 +7,7 @@ require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
 
+
 if (isset($_POST['submit'])) {
     $controller->addUser();
 } else if (isset($_POST['update'])) {
@@ -14,7 +15,9 @@ if (isset($_POST['submit'])) {
 } else if (isset($_POST['delete']) && isset($_POST['id'])) {
     $controller->deleteUser((int)$_POST['id']);
 }
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -24,7 +27,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frelancer-Edge</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./Style/style.css" />
     <link
         href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
         rel="stylesheet" />
@@ -172,7 +175,8 @@ if (isset($_POST['submit'])) {
                                     <tr>
                                         <th scope="col">id</th>
                                         <th scope="col">photo</th>
-                                        <th scope="col">Fullname</th>
+                                        <th scope="col">firstname</th>
+                                        <th scope="col">lastname</th>
                                         <th scope="col">email</th>
                                         <th scope="col">password</th>
                                         <th scope="col">Role</th>
@@ -196,7 +200,10 @@ if (isset($_POST['submit'])) {
                                             </td>
 
                                             <td>
-                                                <a class="text-heading font-semibold"> <?= $user->getFullName(); ?> </a>
+                                                <a class="text-heading font-semibold"> <?= $user->getFirstname(); ?> </a>
+                                            </td>
+                                            <td>
+                                                <a class="text-heading font-semibold"> <?= $user->getLastname(); ?> </a>
                                             </td>
                                             <td>
                                                 <a class="text-heading font-semibold"> <?= $user->getEmail(); ?></a>
@@ -310,8 +317,12 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="fullname" class="form-label">fullname</label>
-                            <input type="text" class="form-control" name="fullname" id="fullname">
+                            <label for="firstname" class="form-label">firstname</label>
+                            <input type="text" class="form-control" name="firstname" id="firstname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">lastname</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname">
                         </div>
 
                         <div class="mb-3">
@@ -369,8 +380,12 @@ if (isset($_POST['submit'])) {
 
                         <!-- Full Name -->
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" name="editfullname" id="editfullname" required>
+                            <label class="form-label">firstName</label>
+                            <input type="text" class="form-control" name="editfirstname" id="editfirstname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LastName</label>
+                            <input type="text" class="form-control" name="editlastname" id="editlastname" required>
                         </div>
 
                         <!-- Email -->
@@ -411,7 +426,8 @@ if (isset($_POST['submit'])) {
     <script>
         function loadUserData(button) {
             const id = button.getAttribute('data-id');
-            const fullname = button.getAttribute('data-fullname');
+            const firstname = button.getAttribute('data-firstname');
+            const lastname = button.getAttribute('data-lastname');
             const email = button.getAttribute('data-email');
             const password = button.getAttribute('data-password');
             const role = button.getAttribute('data-role');
@@ -419,14 +435,16 @@ if (isset($_POST['submit'])) {
 
             console.log('Loading user data:', {
                 id,
-                fullname,
+                firstname,
+                lastname,
                 email,
                 password,
                 role,
                 photo
             });
             document.getElementById('editid').value = id;
-            document.getElementById('editfullname').value = fullname;
+            document.getElementById('editfirstname').value = firstname;
+            document.getElementById('editlastname').value = lastname;
             document.getElementById('editemail').value = email;
             document.getElementById('editpassword').value = password;
             document.getElementById('editrole').value = role;

@@ -1,22 +1,27 @@
 CREATE DATABASE FreelanceEdgeDb;
 -- \c FreelanceEdgeTestDb;
 -- User Table
+CREATE TABLE "roles" (
+    id SERIAL PRIMARY KEY,
+    rolename VARCHAR(20) ,
+);
+
 CREATE TABLE "User" (
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    age VARCHAR(255) NOT NULL,
-    photo VARCHAR(255) NOT NULL,
-    bio VARCHAR(255) NOT NULL,
-    competence VARCHAR(255) NOT NULL,
-    portfolio VARCHAR(255) NOT NULL,
-    tauxHoraire INT,
-    password VARCHAR(255) NOT NULL,
-    projects_id INT NOT NULL,
-    role_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES Role(id) ON DELETE CASCADE
+    firstname VARCHAR(255) ,
+    lastname VARCHAR(255) ,
+    email VARCHAR(255) UNIQUE ,
+    age VARCHAR(255) ,
+    photo VARCHAR(255) ,
+    bio VARCHAR(255) ,
+    competence TEXT[] ,
+    portfolio VARCHAR(255) ,
+    tauxHoraire INT ,
+    password VARCHAR(255) ,
+    projects_id INT ,
+    role_id INT ,
+    FOREIGN KEY (projects_id) REFERENCES Project(id),
+    FOREIGN KEY (role_id) REFERENCES Role(id)
 );
 -- Project Table
 CREATE TABLE "Project" (
@@ -31,7 +36,7 @@ CREATE TABLE "Contract" (
     id SERIAL PRIMARY KEY,
     dateContract VARCHAR(255) NOT NULL,
     project_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Category Table
 CREATE TABLE "Category" (
@@ -44,7 +49,7 @@ CREATE TABLE "Payment" (
     budget INT NOT NULL,
     date_payment DATE NOT NULL,
     project_id INT NOT NULL,
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Table Role
 CREATE TABLE "Role" (
@@ -55,7 +60,7 @@ CREATE TABLE "Role" (
 CREATE TABLE "Messages" (
     id SERIAL PRIMARY KEY,
     date_soumission DATE NOT NULL
-    FOREIGN KEY (projects_id) REFERENCES Project(id) ON DELETE CASCADE
+    FOREIGN KEY (projects_id) REFERENCES Project(id)
 )
 -- Offer Table
 CREATE TABLE "Offer" (
