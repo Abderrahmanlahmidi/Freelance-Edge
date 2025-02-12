@@ -1,7 +1,9 @@
 <?php
 
+require_once __DIR__ . '/../../helpers.php';
 require_once basePath("App/Models/Utilisateur.php");
 session_start();
+
 
 class UtilisateurController
 {
@@ -20,7 +22,6 @@ class UtilisateurController
 
     public function registerUserController()
     {
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $firstname = $_POST['first_name'];
@@ -49,7 +50,7 @@ class UtilisateurController
 
             if ($user !== null) {
                 $emailUser = $user->email;
-                $passwordUser = $user->password;
+                $pasqswordUser = $user->password;
 
                 if ($email == $emailUser && password_verify($password, $passwordUser)) {
 
@@ -76,7 +77,8 @@ class UtilisateurController
     public function addUser()
     {
         if (isset($_POST['submit'])) {
-            $fullName = $_POST['fullname'];
+            $firstname = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
             $email = $_POST['email'];
             $password = $_POST['password'];
             $role_id = $_POST['role'];
@@ -100,7 +102,8 @@ class UtilisateurController
 
             try {
                 $user = new Utilisateur();
-                $user->setFullName($fullName);
+                $user->setFirstname($firstname);
+                $user->setLastname($lastname);
                 $user->setPhoto($photo);
                 $user->setEmail($email);
                 $user->setBio($bio);
@@ -121,10 +124,11 @@ class UtilisateurController
     }
 
 
-    public function getAllUsers()
+
+    public function getAllUsers():array
     {
-        $this->userModel->getAllUsers();
-        require_once basePath("App/Views/admin/dashboard/users.php");
+        return $this->userModel->getAllUsers();
+        // require_once basePath("App/Views/admin/dashboard/users.php");
 
     }
 
@@ -163,7 +167,8 @@ class UtilisateurController
                     }
                 }
                 $user->setId($id);
-                $user->setFullName($_POST['editfullname']);
+                $user->setFirstname($_POST['editfirstname']);
+                $user->setLastname($_POST['editlastname']);
                 $user->setEmail($_POST['editemail']);
                 $user->setPassword($_POST['editpassword']);
                 $user->setRoleId((int)$_POST['editrole']);
