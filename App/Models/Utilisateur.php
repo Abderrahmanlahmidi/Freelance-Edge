@@ -283,7 +283,7 @@ class Utilisateur
                 $user->setRole(new Role($row->role_id, $row->rolename));
                 $users[] = $user;
             }
-
+            
             return $users;
         } catch (PDOException $e) {
             error_log("Database error:" . $e->getMessage());

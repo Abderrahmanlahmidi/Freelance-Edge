@@ -12,6 +12,7 @@ $router -> get('/dashboard', 'UtilisateurController', 'getAllUsers');
 // POST METHODS
 $router->post('/register', 'UtilisateurController', 'registerUserController');
 $router -> post('/login', 'UtilisateurController', 'connectionUserController');
+$router -> post('/users', 'UtilisateurController', 'addUser');
 
 
 
