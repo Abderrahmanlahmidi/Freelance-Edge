@@ -311,7 +311,8 @@ class Utilisateur
     {
         try {
             $query = "UPDATE users SET 
-            fullName = :fullName,
+            firstname = :firstname,
+            lastname = :lastname,
             email = :email,
             password = :password,
             photo = :photo,

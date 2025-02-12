@@ -20,6 +20,13 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
+<style>
+    @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+
+    /* Bootstrap Icons */
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+</style>
+
 <body>
   <!-- Dashboard -->
   <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
@@ -70,7 +77,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active text-warning" aria-current="page" href="./validation.php">
+              <a class="nav-link" aria-current="page" href="./validation.php">
                 <i class="bi bi-bookmarks"></i> Validation
               </a>
             </li>
