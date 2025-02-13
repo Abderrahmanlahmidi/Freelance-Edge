@@ -3,14 +3,16 @@ CREATE TABLE offers
 (
     id          SERIAL PRIMARY KEY,
     titre       VARCHAR(255) NOT NULL,
-    description TEXT
+    description TEXT,
+    project_id INT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
 );
 
 INSERT INTO offers (titre, description)
-VALUES ('Web Development', 'Full-stack web development services'),
-       ('Graphic Design', 'Professional logo and branding design'),
-       ('SEO Optimization', 'Improve your website ranking on search engines'),
-       ('Mobile App', 'Developing native and cross-platform mobile apps');
+VALUES ('Web Development', 'Full-stack web development services',1),
+       ('Graphic Design', 'Professional logo and branding design',2),
+       ('SEO Optimization', 'Improve your website ranking on search engines',3),
+       ('Mobile App', 'Developing native and cross-platform mobile apps',4);
 
 -- 2- Categories
 CREATE TABLE categories
@@ -147,3 +149,30 @@ VALUES ('Web Development', 'Building and maintaining websites'),
        ('Graphic Design', 'Creating visual content'),
        ('SEO Optimization', 'Improving website search ranking'),
        ('Digital Marketing', 'Promoting products online');
+
+
+-- Insert fake data into roles
+INSERT INTO roles (roleName)
+VALUES ('Developer'),
+       ('Designer'),
+       ('Project Manager'),
+       ('Tester');
+
+-- Insert fake data into offers
+INSERT INTO offers (titre, description, project_id)
+VALUES ('Frontend Developer Needed',
+        'Looking for an experienced frontend developer to work on our new web application.', 1),
+       ('UI/UX Designer Wanted', 'Seeking a creative UI/UX designer to revamp our website.', 2),
+       ('Backend Developer Required', 'Need a backend developer with expertise in Node.js and databases.', 3),
+       ('QA Tester Needed', 'Hiring a QA tester to ensure the quality of our latest mobile app.', 4);
+
+-- Insert fake data into users
+INSERT INTO users (firstname, lastname, email, age, photo, bio, competence, portfolio, tauxHoraire, password,projects_id, role_id)
+VALUES ('Ali', 'El Amrani', 'AM@example.com', '28', 'ali.jpg', 'Passionate full-stack developer.',
+        'JavaScript, React, Laravel', 'https://ali-portfolio.com', 50, 'hashedpassword1', 1, 1),
+       ('Fatima', 'Ben Said', 'fatimabensaid@example.com', '26', 'fatima.jpg', 'Creative UI/UX designer.',
+        'Figma, Adobe XD, CSS', 'https://fatima-designs.com', 40, 'hashedpassword2', 2, 2),
+       ('Omar', 'Toumi', 'omartoumi@example.com', '30', 'omar.jpg', 'Experienced project manager.',
+        'Scrum, Agile, Leadership', 'https://omar-pm.com', 60, 'hashedpassword3', 3, 3),
+       ('Salma', 'Haddad', 'salmahaddad@example.com', '27', 'salma.jpg', 'Detail-oriented QA tester.','Automation, Selenium, Manual Testing', 'https://salma-qa.com', 35, 'hashedpassword4', 4, 4);
+
