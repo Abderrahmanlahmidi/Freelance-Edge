@@ -215,8 +215,6 @@ class Utilisateur
         return $user;
     }
 
-
-
     public function register($first_name, $last_name, $age, $email, $password): void
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

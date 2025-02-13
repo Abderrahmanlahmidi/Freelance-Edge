@@ -39,22 +39,35 @@ class Offre
         return $this->descriptionOffre;
     }
 
-
-    public function createOffre(){
-
+    public function createOffre($title, $description){
+        $query = 'INSERT INTO "offers" (title, description) VALUES (:titre, :description)';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindValue(':titre', $title);
+        $stmt->bindValue(':description', $description);
+        $stmt->execute();
     }
 
-    public function updateOffre(){
-
+    public function updateOffre($id, $titre, $descriptionf){
+        $query = 'UPDATE "offers" SET title = :titre, description = :description WHERE id = :id';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':titre', $titre);
+        $stmt->bindValue(':description', $descriptionf);
+        $stmt->execute();
     }
 
-    public function deleteOffre(){
-
+    public function deleteOffre($id){
+        $query = 'DELETE FROM "offers" WHERE id = :id';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
     }
 
     public function getOffres(){
-
+        $query = 'SELECT * FROM "offers"';
+        $stmt = DatabaseConnection::getInstance()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-
 
 }
