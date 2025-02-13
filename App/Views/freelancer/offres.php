@@ -69,7 +69,7 @@ $offres = $offreController->getAllOffres();
         <!-- Search Bar -->
         <div class="search-bar" id="rechrchebat">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Rechercher un offres..." />
+            <input id="search" name="search" type="text" placeholder="Rechercher un offres..." />
         </div>
     </div>
 
@@ -119,7 +119,11 @@ $offres = $offreController->getAllOffres();
     <section>
 
         <div class="container mt-4">
-            <div class="row gy-4">
+
+            <div class="row gy-4" id="search-results">
+
+            </div>
+            <div class="row gy-4" id="all-results">
                 <!-- gy-4 adds spacing between rows -->
                 <?php
 
@@ -166,7 +170,7 @@ $offres = $offreController->getAllOffres();
                                 </div>
 
                                 <a href="#"><button data-bs-toggle="modal"
-                                data-bs-target="#proposition" class="btn btn-success btn-sm">TAke oofre Now</button></a>
+                                        data-bs-target="#proposition" class="btn btn-success btn-sm">TAke oofre Now</button></a>
 
                             </div>
                         </div>
@@ -283,7 +287,7 @@ $offres = $offreController->getAllOffres();
 
 
     <!--  -->
-    
+
     <!-- add sugsition -->
     <div class="modal fade" id="proposition" tabindex="-1" aria-labelledby="propositionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -295,13 +299,13 @@ $offres = $offreController->getAllOffres();
                 <div class="modal-body">
 
                     <form method="POST" action="" enctype="multipart/form-data">
-                       
+
 
                         <div class="mb-3">
                             <label for="firstname" class="form-label">Discription</label>
                             <input type="text" class="form-control" name="discription" id="discription">
                         </div>
-                        
+
 
 
                         <button type="submit" name="submit" class="btn btn-primary">Add</button>
@@ -344,6 +348,43 @@ $offres = $offreController->getAllOffres();
             }
         }
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#search').on('keyup', function() {
+                let value = $(this).val().trim();
+
+                if (value === '') {
+                    $('#all-results').show();
+                    $('#search-results').hide();
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "search.php", 
+                    data: {
+                        search: value
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        console.log('Response:', res); 
+                        if (res.status === 'success') {
+                            $('#all-results').hide();
+                            $('#search-results').html(res.html).show();
+                        } else {
+                            console.error(res.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

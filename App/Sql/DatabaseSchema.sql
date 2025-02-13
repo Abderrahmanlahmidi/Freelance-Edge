@@ -92,3 +92,15 @@ CREATE TABLE offers (
 -- ('offre 1', 'This is a fake description for offer 1', 1000, '2025-02-13', 2),
 -- ('offre 21', 'Description for offer 21', 1500, '2025-03-01', 2),
 -- ('offre 3', 'A third fake offer description', 2000, '2025-04-15', 2);
+
+INSERT INTO offers (titre, description, budget, duree, user_id) VALUES
+('Développeur Web', 'Création d\'un site vitrine pour une entreprise locale.', 1200, '2025-05-10', 3),
+('Application Mobile', 'Développement d\'une application mobile Android et iOS.', 3000, '2025-06-20', 4),
+('Redaction', 'Besoin d\'articles SEO pour un blog.', 500, '2025-04-30', 4),
+('Community Manager', 'Gestion des réseaux sociaux pour une startup.', 800, '2025-05-15', 4),
+('Graphiste', 'Création de logos et de visuels marketing.', 1000, '2025-07-01', 3),
+('Montage Vidéo', 'Montage de vidéos promotionnelles.', 1500, '2025-08-10', 3),
+('Consultant SEO', 'Optimisation SEO pour un site e-commerce.', 2500, '2025-06-05', 2),
+('Développeur Backend', 'Développement d\'une API REST en Laravel.', 3500, '2025-09-15', 3),
+('Traduction Anglais-Français', 'Traduction de documents techniques.', 600, '2025-05-25', 4),
+('Cyber Sécurité', 'Audit et sécurisation d\'un site web.', 4000, '2025-10-01', 2);
