@@ -92,33 +92,7 @@ class Project {
 
     }
 
-    public function getAllProjects(): array
-    {
-        try {
-            $query = "";
-            $stmt = DatabaseConnection::getInstance()->prepare($query);
-            $stmt->execute();
-
-            $projects = [];
-            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-                $project = new Project();
-                $project->setId($row->id);
-                $project->setTitle($row->titre);
-                $project->setDescription($row->description);
-                $project->setBudget($row->budget);
-                $project->setDuree($row->duree);
-                $project->setClient($row->user_id);
-                // $project->setuser(new Utilisateur($row->user_id, $row->firsname));
-                $projects[] = $project;
-            }
-            
-            return $projects;
-        } catch (PDOException $e) {
-            error_log("Database error:" . $e->getMessage());
-            return [];
-        }
-    }
-
+   
     
 
 }
