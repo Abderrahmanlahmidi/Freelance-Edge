@@ -143,6 +143,7 @@
     <!-- book -->
 
     <section>
+
         <div class="container mt-4">
             <div class="row gy-4">
                 <!-- gy-4 adds spacing between rows -->
@@ -164,10 +165,14 @@
 
                                 </td>
                             </div>
-                            
+
                             <p class="text-muted small">
                                 Short description about the book goes here...
                             </p>
+                            <div class="fw-bold">
+                                duree: <span class="text-dark">2 Mois</span>
+                            </div>
+
                             <span class="text-success fw-bold">devlope;nt</span>
                             <span class="text-success fw-bold">design</span>
                         </div>
@@ -185,6 +190,7 @@
                 </div>
 
 
+
             </div>
 
             <div class="pagination-container">
@@ -200,7 +206,6 @@
                 </div>
             </div>
         </div>
-
 
     </section>
 
