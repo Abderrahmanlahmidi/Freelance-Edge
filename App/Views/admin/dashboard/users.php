@@ -328,8 +328,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-body">
 
-                    <form method="POST" action="users.php" enctype="multipart/form-data">
-
+                    <form method="POST" action="/dashboard" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label>Photo</label>
                             <input type="file" id="CRedit-photo" name="photo" class="form-control">

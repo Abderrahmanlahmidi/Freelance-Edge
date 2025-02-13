@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Style/style@.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Login</title>
+    <title>Home</title>
 </head>
 <body class="bg-gray-100">
 <!-- Navbar -->
