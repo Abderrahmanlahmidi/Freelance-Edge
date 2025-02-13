@@ -165,7 +165,8 @@ $offres = $offreController->getAllOffres();
                                     <i class="fas fa-bookmark text-muted"></i>
                                 </div>
 
-                                <a href="#"><button class="btn btn-success btn-sm">TAke oofre Now</button></a>
+                                <a href="#"><button data-bs-toggle="modal"
+                                data-bs-target="#proposition" class="btn btn-success btn-sm">TAke oofre Now</button></a>
 
                             </div>
                         </div>
@@ -278,6 +279,42 @@ $offres = $offreController->getAllOffres();
             </div>
         </div>
     </footer>
+
+
+
+    <!--  -->
+    
+    <!-- add sugsition -->
+    <div class="modal fade" id="proposition" tabindex="-1" aria-labelledby="propositionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Creat Proposition</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST" action="" enctype="multipart/form-data">
+                       
+
+                        <div class="mb-3">
+                            <label for="firstname" class="form-label">Discription</label>
+                            <input type="text" class="form-control" name="discription" id="discription">
+                        </div>
+                        
+
+
+                        <button type="submit" name="submit" class="btn btn-primary">Add</button>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add segsution -->
     <script>
         function toggleFilter() {
             var filterSection = document.getElementById("filter-section");
