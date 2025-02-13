@@ -7,7 +7,7 @@ class Project {
     private int $budget;
     private int $duree;
     private Category $category;
-    private Utilisateur $creatorProject;
+    private Utilisateur $client;
 
 
     public function getId(): int {
@@ -64,12 +64,12 @@ class Project {
     }
 
 
-    public function getCreatorProject(): Utilisateur {
-        return $this->creatorProject;
+    public function getClient(): Utilisateur {
+        return $this->client;
     }
 
-    public function setCreatorProject(Utilisateur $creatorProject): void {
-        $this->creatorProject = $creatorProject;
+    public function setClient(Utilisateur $client): void {
+        $this->client = $client;
     }
 
     public function getProjects() {
@@ -90,6 +90,33 @@ class Project {
     }
     public function deleteProject(){
 
+    }
+
+    public function getAllProjects(): array
+    {
+        try {
+            $query = "";
+            $stmt = DatabaseConnection::getInstance()->prepare($query);
+            $stmt->execute();
+
+            $projects = [];
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $project = new Project();
+                $project->setId($row->id);
+                $project->setTitle($row->titre);
+                $project->setDescription($row->description);
+                $project->setBudget($row->budget);
+                $project->setDuree($row->duree);
+                $project->setClient($row->user_id);
+                // $project->setuser(new Utilisateur($row->user_id, $row->firsname));
+                $projects[] = $project;
+            }
+            
+            return $projects;
+        } catch (PDOException $e) {
+            error_log("Database error:" . $e->getMessage());
+            return [];
+        }
     }
 
 }

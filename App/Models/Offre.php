@@ -9,6 +9,11 @@ class Offre
     private string $titre;
 
     private string $descriptionOffre;
+    private string $budget;
+    private int $duree ;
+    private string $photo;
+    private Utilisateur $client ; 
+
 
     public function __construct()
     {
@@ -39,6 +44,15 @@ class Offre
         return $this->descriptionOffre;
     }
 
+    public function getBudget()
+    {
+ 
+    }
+    public function setBudget()
+    {
+
+    }
+
 
     public function createOffre(){
 
@@ -58,33 +72,7 @@ class Offre
 
 
 
-    public function getAllOffres(): array
-    {
-        try {
-            $query = "";
-            $stmt = DatabaseConnection::getInstance()->prepare($query);
-            $stmt->execute();
-
-            $offres = [];
-            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-                $offre = new Offre();
-                $offre->setId($row->id);
-                $offre->setTitre($row->titre);
-                $offre->setDescriptionOffre($row->description);
-                $offre->setBudget($row->budget);
-                $offre->setDuree($row->duree);
-                $offre->setPhoto($row->photo);
-                $offre->setRoleId($row->user_id);
-                $offre->setRole(new Role($row->user_id, $row->firsname));
-                $offres[] = $offre;
-            }
-            
-            return $offres;
-        } catch (PDOException $e) {
-            error_log("Database error:" . $e->getMessage());
-            return [];
-        }
-    }
+   
 
 
 }
