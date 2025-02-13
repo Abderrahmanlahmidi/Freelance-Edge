@@ -1,6 +1,11 @@
 <?php
+require_once __DIR__ . '/../../Controllers/OffreController.php';
 
 
+$offreController = new OffreController();
+$offres = $offreController->getAllOffres();
+
+// var_dump($offreController);
 ?>
 
 
@@ -10,7 +15,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./offres.css" />
+    <link rel="stylesheet" type="text/css" href="./offres.css" />
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -19,6 +24,7 @@
 
     <title>FrelancerEdge</title>
 </head>
+
 
 <body>
     <nav class="navbar">
@@ -52,32 +58,20 @@
 
             <!-- rechrche -->
 
-            <div
-                class="nav-right mt-5"
-                style="display: grid; justify-content: center; width: 60%">
-                <!-- Search Bar -->
-                <div class="search-bar" id="rechrchebat">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Rechercher un offres..." />
-                </div>
-            </div>
-            <!-- rechrche -->
-
-            <!-- Right Side -->
             <div class="nav-right">
-
-                <div></div>
-                <div></div>
-
             </div>
         </div>
     </nav>
 
-    <!-- searche -->
-
-
-
-    <!-- start filter -->
+    <div
+        class="nav-right mt-5"
+        style="display: grid; justify-content: center; width: 60%">
+        <!-- Search Bar -->
+        <div class="search-bar" id="rechrchebat">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Rechercher un offres..." />
+        </div>
+    </div>
 
     <div class="container mt-4">
         <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
@@ -89,19 +83,8 @@
                 <span id="filter-button-text">schow</span>
             </button>
         </div>
-
         <hr />
         <div id="filter-section" class="filter-container" style="display: none">
-            <!-- <div class="row mb-3">
-                <div class="col-md-6 toggle-switch">
-                    <label>Available</label>
-                    <input type="checkbox" />
-                </div>
-                <div class="col-md-6 toggle-switch">
-                    <label>Only plus title</label>
-                    <input type="checkbox" checked />
-                </div>
-            </div> -->
             <div class="row g-3">
                 <div class="col-md-4">
                     <label>Category:</label>
@@ -122,77 +105,73 @@
                 <div class="col-md-4">
                     <label>Budgee:</label>
                     <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         placeholder="Select ur Bedget.." />
                 </div>
-
-
-
             </div>
             <div class="d-flex justify-content-between mt-4">
-                <button class="btn btn-reset">Reset</button>
+                <button class="btn btn-reset"></button>
                 <button class="btn btn-apply">Apply</button>
             </div>
         </div>
     </div>
-    <script></script>
-
-    <!--end  filter -->
-
-    <!-- book -->
-
     <section>
 
         <div class="container mt-4">
             <div class="row gy-4">
                 <!-- gy-4 adds spacing between rows -->
-                <div class="col-md-9 mt-4">
-                    <div class="book-card d-flex gap-4 p-3 shadow-sm rounded">
-                        <img
-                            src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c"
-                            alt="Book Cover"
-                            class="book-cover" />
-                        <div class="book-details flex-grow-1">
-                            <div class="book-author text-success fw-bold">offre Name</div>
-                            <div class="book-title fw-bold fs-5">
-                                <td>
-                                    <img
-                                        alt="..."
-                                        src="photo"
-                                        class="avatar avatar-sm rounded-circle me-2" />
-                                    <a class="text-heading font-semibold"> Client Name</a>
+                <?php
 
-                                </td>
+                foreach ($offres as $offre):
+                ?>
+
+                    <div class="col-md-9 mt-4">
+                        <div class="book-card d-flex gap-4 p-3 shadow-sm rounded">
+                            <img
+                                src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c"
+                                alt="Book Cover"
+                                class="book-cover" />
+                            <div class="book-details flex-grow-1">
+                                <div class="book-author text-success fw-bold"><?= $offre->getTitre(); ?></div>
+                                <div class="book-title fw-bold fs-5">
+                                    <td>
+                                        <img
+                                            alt="..."
+                                            src="photo"
+                                            class="avatar avatar-sm rounded-circle me-2" />
+                                        <a class="text-heading font-semibold"> <?= $offre->getClient()->getFirstNAme(); ?></a>
+
+                                    </td>
+                                </div>
+
+                                <p class="text-muted small">
+                                    <?= $offre->getDescriptionOffre(); ?>
+                                </p>
+                                <div class="fw-bold">
+                                    duree: <span class="text-dark"><?= $offre->getDuree(); ?></span>
+                                </div>
+                                <div class="fw-bold">
+                                    Budget: <span class="text-dark"><?= $offre->getBudget(); ?></span>
+                                </div>
+
+                                <span class="text-success fw-bold">devlopemnt</span>
+
                             </div>
+                            <div
+                                class="d-flex flex-column align-items-end justify-content-between">
+                                <div class="book-icons">
+                                    <i class="fas fa-star text-warning"></i> 4.4
+                                    <i class="fas fa-bookmark text-muted"></i>
+                                </div>
 
-                            <p class="text-muted small">
-                                Short description about the book goes here...
-                            </p>
-                            <div class="fw-bold">
-                                duree: <span class="text-dark">2 Mois</span>
+                                <a href="#"><button class="btn btn-success btn-sm">TAke oofre Now</button></a>
+
                             </div>
-
-                            <span class="text-success fw-bold">devlope;nt</span>
-                            <span class="text-success fw-bold">design</span>
-                        </div>
-                        <div
-                            class="d-flex flex-column align-items-end justify-content-between">
-                            <div class="book-icons">
-                                <i class="fas fa-star text-warning"></i> 4.4
-                                <i class="fas fa-bookmark text-muted"></i>
-                            </div>
-
-                            <a href="reser.html"><button class="btn btn-success btn-sm">TAke oofre Now</button></a>
-
                         </div>
                     </div>
-                </div>
-
-
-
+                <?php endforeach; ?>
             </div>
-
             <div class="pagination-container">
                 <div class="pagination">
                     <a href="#">offre</a>
@@ -208,11 +187,6 @@
         </div>
 
     </section>
-
-    <!-- footer -->
-    <!-- footer -->
-    <!-- footer -->
-
     <footer class="footer">
         <div class="footer-content">
             <!-- Footer Top -->
@@ -258,7 +232,7 @@
                                     </li>
                                     <li>
                                         <i class="fas fa-envelope"></i>
-                                        <span>contact@bibliotech.ma</span>
+                                        <span>contact@frelence.ma</span>
                                     </li>
                                 </ul>
                             </div>
@@ -304,13 +278,7 @@
             </div>
         </div>
     </footer>
-
-
-
     <script>
-        // filter
-
-
         function toggleFilter() {
             var filterSection = document.getElementById("filter-section");
             var filterIcon = document.getElementById("filter-icon");

@@ -9,7 +9,7 @@ $router -> get('/logout', 'UtilisateurController', 'logoutUserController');
 $router -> get('/dashboard', 'UtilisateurController', 'getAllUsers');
 
 $router -> get('/offer', 'offreController', 'getOffresController');
-$router -> get('/offers', 'offreController', 'getAllOffres');
+// $router -> get('/offers', 'offreController', 'getAllOffres');
 
 
 

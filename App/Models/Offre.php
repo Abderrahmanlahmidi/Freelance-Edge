@@ -1,4 +1,5 @@
 <?php
+require_once basePath("App/Models/Utilisateur.php");
 
 require_once basePath("App/Database/DatabaseConnection.php");
 
@@ -7,8 +8,8 @@ class Offre
     private int $id;
     private string $titre;
     private string $descriptionOffre;
-    private string $budget;
-    private int $duree;
+    private int $budget;
+    private string $duree;
     private string $photo;
     private Utilisateur $client;
 
@@ -118,7 +119,9 @@ class Offre
     public function getAllOffres(): array
     {
         try {
-            $query = "";
+            $query = "SELECT offers.*, users.firstname 
+            FROM offers 
+            JOIN users ON offers.user_id = users.id";
             $stmt = DatabaseConnection::getInstance()->prepare($query);
             $stmt->execute();
 
@@ -127,11 +130,14 @@ class Offre
                 $offre = new offre();
                 $offre->setId($row->id);
                 $offre->setTitre($row->titre);
-                $offre->getDescriptionOffre($row->description);
+                $offre->setDescriptionOffre($row->description);
                 $offre->setBudget($row->budget);
                 $offre->setDuree($row->duree);
-                $offre->setClient($row->user_id);
-                // $project->setuser(new Utilisateur($row->user_id, $row->firsname));
+
+                $client = new Utilisateur();
+                $client->setFirstname($row->firstname);
+                $offre->setClient($client);
+
                 $offres[] = $offre;
             }
 

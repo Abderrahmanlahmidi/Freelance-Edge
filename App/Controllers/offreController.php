@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../helpers.php';
 
 require_once basePath("App/Models/Offre.php");
 
@@ -16,10 +17,10 @@ Class OffreController{
         require_once basePath("App/Views/Pages/offreView.php");
     }
 
-    public function getAllOffres()
+    public function getAllOffres():array
     {
         $offre = $this->offreModel->getAllOffres();
-        require_once basePath("/App/Views/frelancer/offres.php");
+        // require_once basePath("/App/Views/frelancer/offres.php");
         return $offre;
     }
 
