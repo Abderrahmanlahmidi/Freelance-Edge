@@ -242,6 +242,21 @@ if (isset($_POST['submit'])) {
 
 
                                             <td class="text-end">
+
+                                                <a href="#" class="btn d-inline-flex btn-sm btn-warning mx-1"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edituserModal"
+                                                    onclick="loadUserData(this)"
+                                                    data-id="<?= htmlspecialchars($user->getId()) ?>"
+                                                    data-firstname="<?= htmlspecialchars($user->getFirstname()) ?>"
+                                                    data-lastname="<?= htmlspecialchars($user->getLastname()) ?>"
+                                                    data-email="<?= htmlspecialchars($user->getEmail()) ?>"
+                                                    data-password="<?= htmlspecialchars($user->getPassword()) ?>"
+                                                    data-role="<?= htmlspecialchars($user->getRoleId()) ?>"
+                                                    data-photo="<?= htmlspecialchars($user->getPhoto()) ?>">
+                                                    <span class="pe-2"><i class="bi bi-pencil"></i></span>
+                                                    Edit
+                                                </a>
                                                
                                                 <a>
 
@@ -312,7 +327,6 @@ if (isset($_POST['submit'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
 
                     <form method="POST" action="/dashboard" enctype="multipart/form-data">
                         <div class="mb-3">

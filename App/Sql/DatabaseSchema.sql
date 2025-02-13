@@ -26,15 +26,15 @@ INSERT INTO roles ("Admin", "Client","Freelancer")
 --     FOREIGN KEY (role_id) REFERENCES roles(id)
 -- );
 -- Project Table
--- CREATE TABLE projects (
---     id SERIAL PRIMARY KEY,
---     titre VARCHAR(255),
---     description TEXT,
---     budget INT,
---     durre DATE,
---     offers_id INT,
---     FOREIGN KEY (offers_id) REFERENCES offers(id)
--- );
+CREATE TABLE projects (
+    id SERIAL PRIMARY KEY,
+    titre VARCHAR(255),
+    description TEXT,
+    budget INT,
+    durre DATE,
+    offers_id INT,
+    FOREIGN KEY (offers_id) REFERENCES offers(id)
+);
 -- Contract Table
 CREATE TABLE contrats (
     id SERIAL PRIMARY KEY,
