@@ -10,7 +10,7 @@ class DatabaseConnection{
         $username = "postgres";
         $dbname = "freelanceedgedb";
         $host = "localhost";
-        $password = "123123321321@instance";
+        $password = "4321";
         $port = 5432;
 
         $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";

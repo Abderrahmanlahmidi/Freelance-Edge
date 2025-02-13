@@ -1,8 +1,13 @@
 <?php
 require_once __DIR__ . '/../../../Controllers/UtilisateurController.php';
 
+
+// echo " dfghjklmù";
+
 $controller = new UtilisateurController();
 $users = $controller->getAllUsers();
+
+// var_dump($users);
 
 
 if (isset($_POST['submit'])) {
@@ -12,6 +17,7 @@ if (isset($_POST['submit'])) {
 } else if (isset($_POST['delete']) && isset($_POST['id'])) {
     $controller->deleteUser((int)$_POST['id']);
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -27,6 +33,14 @@ if (isset($_POST['submit'])) {
         rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
+
+
+<style>
+    @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+
+    /* Bootstrap Icons */
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+</style>
 
 <body>
     <!-- Dashboard -->
@@ -76,6 +90,11 @@ if (isset($_POST['submit'])) {
                                 href="./users.php">
                                 <i class="bi bi-people"></i> users
                             </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="./validation.php">
+                            <i class="bi bi-bookmarks"></i> Validation
+                        </a>
                         </li>
 
 
@@ -169,7 +188,8 @@ if (isset($_POST['submit'])) {
                                     <tr>
                                         <th scope="col">id</th>
                                         <th scope="col">photo</th>
-                                        <th scope="col">Fullname</th>
+                                        <th scope="col">firstname</th>
+                                        <th scope="col">lastname</th>
                                         <th scope="col">email</th>
                                         <th scope="col">password</th>
                                         <th scope="col">Role</th>
@@ -179,7 +199,10 @@ if (isset($_POST['submit'])) {
                                 </thead>
                                 <tbody>
                                     <!--  -->
-                                    <?php foreach ($users as $user): ?>
+                                    <?php 
+                                    
+                                    foreach ($users as $user): 
+                                        ?>
                                         <tr>
                                             <td>
                                                 <a class="text-heading font-semibold" href="#"> <?= $user->getId(); ?> </a>
@@ -193,7 +216,10 @@ if (isset($_POST['submit'])) {
                                             </td>
 
                                             <td>
-                                                <a class="text-heading font-semibold"> <?= $user->getFullName(); ?> </a>
+                                                <a class="text-heading font-semibold"> <?= $user->getFirstname(); ?> </a>
+                                            </td>
+                                            <td>
+                                                <a class="text-heading font-semibold"> <?= $user->getLastname(); ?> </a>
                                             </td>
                                             <td>
                                                 <a class="text-heading font-semibold"> <?= $user->getEmail(); ?></a>
@@ -216,27 +242,15 @@ if (isset($_POST['submit'])) {
 
 
                                             <td class="text-end">
-                                                <a href="#" class="btn d-inline-flex btn-sm btn-warning mx-1"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#edituserModal"
-                                                    onclick="loadUserData(this)"
-                                                    data-id="<?= htmlspecialchars($user->getId()) ?>"
-                                                    data-fullname="<?= htmlspecialchars($user->getFullName()) ?>"
-                                                    data-email="<?= htmlspecialchars($user->getEmail()) ?>"
-                                                    data-password="<?= htmlspecialchars($user->getPassword()) ?>"
-                                                    data-role="<?= htmlspecialchars($user->getRoleId()) ?>"
-                                                    data-photo="<?= htmlspecialchars($user->getPhoto()) ?>">
-                                                    <span class="pe-2"><i class="bi bi-pencil"></i></span>
-                                                    Edit
-                                                </a>
+                                               
                                                 <a>
 
-                                                    <form method="POST" action="" style="display: inline;">
+                                                <form method="POST" action="" style="display: inline;">
                                                         <input type="hidden" name="id" value="<?= $user->getId() ?>">
                                                         <button type="submit" name="delete" class="btn d-inline-flex btn-sm btn-danger mx-1">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
-                                                    </form>
+                                                </form>
 
                                                 </a>
                                             </td>
@@ -299,16 +313,20 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-body">
 
-                    <form method="POST" action="/dashboard" enctype="multipart/form-data">
 
+                    <form method="POST" action="/dashboard" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label>Photo</label>
                             <input type="file" id="CRedit-photo" name="photo" class="form-control">
                         </div>
 
                         <div class="mb-3">
-                            <label for="fullname" class="form-label">fullname</label>
-                            <input type="text" class="form-control" name="fullname" id="fullname">
+                            <label for="firstname" class="form-label">firstname</label>
+                            <input type="text" class="form-control" name="firstname" id="firstname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">lastname</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname">
                         </div>
 
                         <div class="mb-3">
@@ -366,8 +384,12 @@ if (isset($_POST['submit'])) {
 
                         <!-- Full Name -->
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" name="editfullname" id="editfullname" required>
+                            <label class="form-label">firstName</label>
+                            <input type="text" class="form-control" name="editfirstname" id="editfirstname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LastName</label>
+                            <input type="text" class="form-control" name="editlastname" id="editlastname" required>
                         </div>
 
                         <!-- Email -->
@@ -408,7 +430,8 @@ if (isset($_POST['submit'])) {
     <script>
         function loadUserData(button) {
             const id = button.getAttribute('data-id');
-            const fullname = button.getAttribute('data-fullname');
+            const firstname = button.getAttribute('data-firstname');
+            const lastname = button.getAttribute('data-lastname');
             const email = button.getAttribute('data-email');
             const password = button.getAttribute('data-password');
             const role = button.getAttribute('data-role');
@@ -416,14 +439,16 @@ if (isset($_POST['submit'])) {
 
             console.log('Loading user data:', {
                 id,
-                fullname,
+                firstname,
+                lastname,
                 email,
                 password,
                 role,
                 photo
             });
             document.getElementById('editid').value = id;
-            document.getElementById('editfullname').value = fullname;
+            document.getElementById('editfirstname').value = firstname;
+            document.getElementById('editlastname').value = lastname;
             document.getElementById('editemail').value = email;
             document.getElementById('editpassword').value = password;
             document.getElementById('editrole').value = role;

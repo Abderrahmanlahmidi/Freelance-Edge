@@ -2,6 +2,7 @@
 
 
 // require_once __DIR__ . '/../../App/Models/Project.php';
+require_once basePath("App/Models/Role.php");
 
 
 require_once basePath('App/Database/DatabaseConnection.php');
@@ -11,13 +12,15 @@ class Utilisateur
 
 
     public int $id = 0;
-    public string $fullName = "";
+    public string $firstname = "";
+    public string $lastname = "";
+    public int $age = 0;
     public Role $role;
     public string $email;
     public string $password;
     public string $passwordConfirmation;
     public string $photo = "";
-    public string $project = "";
+    public Project $project;
     public string $bio = "";
     public array $competence = [];
     public string $portfolio = "";
@@ -29,10 +32,11 @@ class Utilisateur
 
     public function __construct() {}
 
-    public static function instance(string $fullName, string $email, string $password, string $passwordConfirmation, string $photo, int $role_id, Role $role, string $project, string $bio)
+    public static function instance(string $firstname, string $lastname, int $age, string $email, string $password, string $passwordConfirmation, string $photo, int $role_id, Role $role, Project $project, string $bio)
     {
         $instance = new self();
-        $instance->fullName = $fullName;
+        $instance->firstname = $firstname;
+        $instance->lastname = $lastname;
         $instance->email = $email;
         $instance->password = $password;
         $instance->passwordConfirmation = $passwordConfirmation;
@@ -40,6 +44,7 @@ class Utilisateur
         $instance->role = $role;
         $instance->project = $project;
         $instance->bio = $bio;
+        $instance->age = $age;
         $instance->role_id = $role_id;
 
 
@@ -61,9 +66,17 @@ class Utilisateur
         return $this->id;
     }
 
-    public function getFullName(): string
+    public function getFirstname(): string
     {
-        return $this->fullName;
+        return $this->firstname;
+    }
+    public function getlastname(): string
+    {
+        return $this->lastname;
+    }
+    public function getAge(): int
+    {
+        return $this->age;
     }
 
     public function getRole(): Role
@@ -87,7 +100,7 @@ class Utilisateur
         return $this->photo;
     }
 
-    public function getProject(): string
+    public function getProject(): Project
     {
         return $this->project;
     }
@@ -134,9 +147,17 @@ class Utilisateur
         $this->id = $id;
     }
 
-    public function setFullName(string $fullName): void
+    public function setFirstname(string $firstname): void
     {
-        $this->fullName = $fullName;
+        $this->firstname = $firstname;
+    }
+    public function setLastname(string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+    public function setAge(int $age): void
+    {
+        $this->age = $age;
     }
 
     public function setRole(Role $role): void
@@ -149,12 +170,10 @@ class Utilisateur
         $this->photo = $photo;
     }
 
-    public function setProject(string $project): void
+    public function setProject(Project $project): void
     {
         $this->project = $project;
     }
-
-
 
     public function setBio(string $bio): void
     {
@@ -195,11 +214,13 @@ class Utilisateur
 
     public function createUser(Utilisateur $user)
     {
-        $query = "INSERT INTO users (fullName, email, password, photo, bio, competence, portfolio, role_id, tauxhoraire) VALUES (:fullName, :email, :password, :photo, :bio, :competence, :portfolio, :role_id, :tauxhoraire)";
+        $query = "INSERT INTO users (firstname, lastname,age, email, password, photo, bio, competence, portfolio, role_id, tauxhoraire) VALUES (:firstname, :lastname, :age, :email, :password, :photo, :bio, :competence, :portfolio, :role_id, :tauxhoraire)";
 
         $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute([
-            'fullName'    => $user->getFullName(),
+            'firstname'    => $user->getFirstname(),
+            'lastname'    => $user->getlastname(),
+            'age'    => $user->getAge(),
             'email'       => $user->getEmail(),
             'password'    => $user->getPassword(),
             'photo'       => $user->getPhoto(),
@@ -243,37 +264,33 @@ class Utilisateur
             $query = "
             SELECT 
                 u.*,
-                r.rolename as role_name
+                r.rolename as rolename
             FROM users u
             LEFT JOIN roles r ON u.role_id = r.id
         ";
             $stmt = DatabaseConnection::getInstance()->prepare($query);
             $stmt->execute();
 
-
-
             $users = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                 $user = new Utilisateur();
-                $user->setId($row['id']);
-                $user->setFullName($row['fullname']);
-                $user->setEmail($row['email']);
-                $user->setPassword($row['password']);
-                $user->setPhoto($row['photo']);
-                $user->setRoleId($row['role_id']);
-                $user->setRole(new Role($row['role_id'], $row['role_name']));
-
+                $user->setId($row->id);
+                $user->setFirstname($row->firstname);
+                $user->setLastname($row->lastname);
+                $user->setEmail($row->email);
+                $user->setPassword($row->password);
+                $user->setPhoto($row->photo);
+                $user->setRoleId($row->role_id);
+                $user->setRole(new Role($row->role_id, $row->rolename));
                 $users[] = $user;
             }
-
+            
             return $users;
         } catch (PDOException $e) {
             error_log("Database error:" . $e->getMessage());
             return [];
         }
     }
-
-
 
     public function deleteUser(int $id)
     {
@@ -304,7 +321,8 @@ class Utilisateur
 
             $stmt = DatabaseConnection::getInstance()->prepare($query);
             return $stmt->execute([
-                'fullName' => $user->getFullName(),
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getlastname(),
                 'email' => $user->getEmail(),
                 'password' => $user->getPassword(),
                 'photo' => $user->getPhoto(),
@@ -328,7 +346,8 @@ class Utilisateur
             $userData = $stmt->fetch(PDO::FETCH_ASSOC);
             $user = new Utilisateur();
             $user->setId($userData['id']);
-            $user->setFullName($userData['fullname']);
+            $user->setFirstname($userData['firstname']);
+            $user->setLastname($userData['lastname']);
             $user->setEmail($userData['email']);
             $user->setPassword($userData['password']);
             $user->setPhoto($userData['photo']);
