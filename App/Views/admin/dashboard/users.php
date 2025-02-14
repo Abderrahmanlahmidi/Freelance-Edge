@@ -385,7 +385,7 @@ if (isset($_POST['submit'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="users.php" enctype="multipart/form-data">
+                    <form method="POST" action="/dashboard" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="editid" id="editid">
 
