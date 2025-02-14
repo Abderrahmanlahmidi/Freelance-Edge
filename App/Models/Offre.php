@@ -67,7 +67,8 @@ class Offre
         $query = 'SELECT * FROM "offers"';
         $stmt = DatabaseConnection::getInstance()->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        $offers =  $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $offers;
     }
 
 }

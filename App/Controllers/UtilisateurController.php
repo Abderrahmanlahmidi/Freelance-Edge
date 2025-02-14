@@ -125,15 +125,10 @@ class UtilisateurController
 
 
 
-    public function getAllUsers():array
+    public function getAllUsers()
     {
         $user = $this->userModel->getAllUsers();
-        return $user;
-        var_dump($user);
-        // die;
-        
         require_once basePath("App/Views/admin/dashboard/users.php");
-
     }
 
     public function deleteUser(int $id)

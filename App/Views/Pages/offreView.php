@@ -1,3 +1,4 @@
 <?php
-
-var_dump($offres);
+echo "<pre>";
+print_r($offers);
+echo "</pre>";

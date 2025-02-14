@@ -8,11 +8,13 @@ CREATE TABLE offers
     FOREIGN KEY (project_id) REFERENCES projects(id)
 );
 
-INSERT INTO offers (titre, description)
-VALUES ('Web Development', 'Full-stack web development services',1),
-       ('Graphic Design', 'Professional logo and branding design',2),
-       ('SEO Optimization', 'Improve your website ranking on search engines',3),
-       ('Mobile App', 'Developing native and cross-platform mobile apps',4);
+INSERT INTO offers (titre, description, project_id)
+VALUES ('Web Development', 'Full-stack web development services',5),
+       ('Graphic Design', 'Professional logo and branding design',6),
+       ('SEO Optimization', 'Improve your website ranking on search engines',7),
+       ('Mobile App', 'Developing native and cross-platform mobile apps',8);
+
+ALTER TABLE projects ADD user_id INT NOT NULL;
 
 -- 2- Categories
 CREATE TABLE categories
@@ -21,7 +23,7 @@ CREATE TABLE categories
     category VARCHAR(255) NOT NULL
 );
 
-INSERT INTO categories (category)
+INSERT INTO categorys (category)
 VALUES ('Technology'),
        ('Design'),
        ('Marketing'),
@@ -160,8 +162,7 @@ VALUES ('Developer'),
 
 -- Insert fake data into offers
 INSERT INTO offers (titre, description, project_id)
-VALUES ('Frontend Developer Needed',
-        'Looking for an experienced frontend developer to work on our new web application.', 1),
+VALUES ('Frontend Developer Needed','Looking for an experienced frontend developer to work on our new web application.', 1),
        ('UI/UX Designer Wanted', 'Seeking a creative UI/UX designer to revamp our website.', 2),
        ('Backend Developer Required', 'Need a backend developer with expertise in Node.js and databases.', 3),
        ('QA Tester Needed', 'Hiring a QA tester to ensure the quality of our latest mobile app.', 4);
