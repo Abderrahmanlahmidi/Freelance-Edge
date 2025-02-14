@@ -125,11 +125,10 @@ class UtilisateurController
 
 
 
-    public function getAllUsers():array
+    public function getAllUsers()
     {
         $user = $this->userModel->getAllUsers();
-        
-        require_once basePath("/App/Views/admin/dashboard/users.php");
+        require_once basePath("App/Views/admin/dashboard/users.php");
         return $user;
     }
 

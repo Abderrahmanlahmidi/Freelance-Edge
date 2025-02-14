@@ -1,10 +1,5 @@
 <?php
-
-
-// require_once __DIR__ . '/../../App/Models/Project.php';
 require_once basePath("App/Models/Role.php");
-
-
 require_once basePath('App/Database/DatabaseConnection.php');
 
 class Utilisateur

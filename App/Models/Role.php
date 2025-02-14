@@ -47,7 +47,6 @@ class Role
         $id = $this->id;
         $name = $this->rolename;
 
-
         return "(Role) => id : " . $id . " , Role name : " . $name;
     }
 }

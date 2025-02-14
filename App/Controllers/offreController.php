@@ -13,7 +13,7 @@ Class OffreController{
     }
 
     public function getOffresController(){
-        $offres = $this -> offreModel -> getOffres();
+         $offers = $this -> offreModel -> getOffres();
         require_once basePath("App/Views/Pages/offreView.php");
     }
 
