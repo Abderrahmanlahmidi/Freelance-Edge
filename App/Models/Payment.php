@@ -32,11 +32,11 @@ class Payment
     }
 
     public function setProjectName(int $ProjectName){
-        $this->ProjectName = $ProjectName;
+        $this->projectName = $ProjectName;
     }
 
     public function getProjectName(){
-        return $this -> ProjectName;
+        return $this -> projectName;
     }
 
     public function createPayment(){

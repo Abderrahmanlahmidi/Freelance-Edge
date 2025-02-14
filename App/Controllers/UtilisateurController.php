@@ -129,6 +129,7 @@ class UtilisateurController
     {
         $user = $this->userModel->getAllUsers();
         require_once basePath("App/Views/admin/dashboard/users.php");
+        return $user;
     }
 
     public function deleteUser(int $id)

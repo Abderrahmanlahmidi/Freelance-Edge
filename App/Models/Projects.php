@@ -7,7 +7,7 @@ class Project {
     private int $budget;
     private int $duree;
     private Category $category;
-    private Utilisateur $creatorProject;
+    private Utilisateur $client;
 
 
     public function getId(): int {
@@ -64,12 +64,12 @@ class Project {
     }
 
 
-    public function getCreatorProject(): Utilisateur {
-        return $this->creatorProject;
+    public function getClient(): Utilisateur {
+        return $this->client;
     }
 
-    public function setCreatorProject(Utilisateur $creatorProject): void {
-        $this->creatorProject = $creatorProject;
+    public function setClient(Utilisateur $client): void {
+        $this->client = $client;
     }
 
     public function getProjects() {
@@ -91,6 +91,9 @@ class Project {
     public function deleteProject(){
 
     }
+
+   
+    
 
 }
 ?>
